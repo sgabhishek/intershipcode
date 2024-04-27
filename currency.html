@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Currency Converter</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #afc3d3;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background-color: #a0b6c6;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 300px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 0;
+        color: #0c0c0c;
+    }
+
+    .input-group {
+        margin-bottom: 20px;
+    }
+
+    .input-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #111111;
+    }
+
+    .input-group input[type="number"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .convert-btn {
+        display: block;
+        width: 100%;
+        padding: 8px;
+        border: none;
+        border-radius: 4px;
+        background-color: #22d285;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .convert-btn:hover {
+        background-color: #0e77ce;
+    }
+
+    .result {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 18px;
+        color: #0d5993;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Currency Converter</h2>
+    <div class="input-group">
+        <label for="fromAmount">Amount to Convert</label>
+        <input type="number" id="fromAmount" placeholder="Enter amount...">
+    </div>
+    <div class="input-group">
+        <label for="fromCurrency">From Currency</label>
+        <select id="fromCurrency">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="JPY">JPY</option>
+            <option value="CNY">CNY</option>
+            <option value="INR">INR</option>
+        </select>
+    </div>
+    <div class="input-group">
+        <label for="toCurrency">To Currency</label>
+        <select id="toCurrency">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="JPY">JPY</option>
+            <option value="CNY">CNY</option>
+            <option value="INR">INR</option>
+        </select>
+    </div>
+    <button class="convert-btn" onclick="convert()">Convert</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function convert() {
+        const fromAmount = document.getElementById("fromAmount").value;
+        const fromCurrency = document.getElementById("fromCurrency").value;
+        const toCurrency = document.getElementById("toCurrency").value;
+
+        fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`)
+            .then(response => response.json())
+            .then(data => {
+                const exchangeRate = data.rates[toCurrency];
+                if (exchangeRate) {
+                    const result = (fromAmount * exchangeRate).toFixed(2);
+                    document.getElementById("result").innerHTML = `${fromAmount} ${fromCurrency} = ${result} ${toCurrency}`;
+                } else {
+                    document.getElementById("result").innerHTML = "Invalid currency code or rate not available.";
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("result").innerHTML = "An error occurred while fetching exchange rates.";
+            });
+    }
+</script>
+
+</body>
+</html>
