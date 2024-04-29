@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz App</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to bottom right, #0b7199, #0aca5d);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        margin-top: 0;
+        color: #930b1b;
+    }
+
+    .question {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .options {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .option {
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #ff5722;
+        border: none;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .option:hover {
+        background-color: #f4511e;
+    }
+
+    .correct-answer {
+        background-color: #4caf50 !important;
+        animation: correctAnimation 0.5s ease-in-out;
+    }
+
+    @keyframes correctAnimation {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.2);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Quiz App</h1>
+    <div class="question" id="question">Loading...</div>
+    <div class="options" id="options">
+        <!-- Options will be filled dynamically using JavaScript -->
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { 
+            question: "What is the capital of France?",
+            options: ["Paris", "Berlin", "London", "Rome"],
+            correctAnswer: "Paris"
+        },
+        { 
+            question: "What is the largest ocean in the world?",
+            options: ["Pacific", "Atlantic", "Indian", "Arctic"],
+            correctAnswer: "Pacific"
+        },
+        { 
+            question: "Who wrote 'To Kill a Mockingbird'?",
+            options: ["Harper Lee", "Stephen King", "J.K. Rowling", "Ernest Hemingway"],
+            correctAnswer: "Harper Lee"
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function loadQuestion() {
+        const questionElement = document.getElementById("question");
+        const optionsElement = document.getElementById("options");
+        
+        const currentQuestion = questions[currentQuestionIndex];
+        questionElement.textContent = currentQuestion.question;
+
+        optionsElement.innerHTML = "";
+        currentQuestion.options.forEach(option => {
+            const optionButton = document.createElement("button");
+            optionButton.textContent = option;
+            optionButton.classList.add("option");
+            optionButton.addEventListener("click", function() {
+                checkAnswer(option);
+            });
+            optionsElement.appendChild(optionButton);
+        });
+    }
+
+    function checkAnswer(selectedAnswer) {
+        const currentQuestion = questions[currentQuestionIndex];
+        const correctAnswer = currentQuestion.correctAnswer;
+
+        const selectedOption = document.querySelector(`.options .option:nth-child(${currentQuestion.options.indexOf(selectedAnswer) + 1})`);
+
+        if (selectedAnswer === correctAnswer) {
+            selectedOption.classList.add("correct-answer");
+            setTimeout(() => {
+                alert("Correct answer!");
+                selectedOption.classList.remove("correct-answer");
+                nextQuestion();
+            }, 500);
+        } else {
+            alert("Incorrect answer!");
+        }
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            loadQuestion();
+        } else {
+            alert("Quiz completed!");
+        }
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>

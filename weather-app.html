@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather App</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to bottom right, #115b9c, #10ba84);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        margin-top: 0;
+        color: #5751a3;
+    }
+
+    select {
+        padding: 8px;
+        font-size: 18px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #4caf50;
+        border: none;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #d97c11;
+    }
+
+    .weather-info {
+        font-size: 24px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Weather App</h1>
+    <select id="country">
+        <option value="USA">USA</option>
+        <option value="UK">UK</option>
+        <option value="Australia">Australia</option>
+        <option value="india">india</option>
+        <option value="Pakistan">Pakistan</option>
+        <option value="Bali">Bali</option>
+        <!-- Add more countries as needed -->
+    </select>
+    <button onclick="getWeather()">Get Weather</button>
+    <div class="weather-info" id="weatherInfo"></div>
+</div>
+
+<script>
+    function getWeather() {
+        const selectedCountry = document.getElementById("country").value;
+
+        // Dummy weather data (replace with real API call)
+        const weatherData = {
+            "USA": "Sunny",
+            "UK": "Cloudy",
+            "Australia": "Rainy",
+            "india": "sunny",
+            "Pakistan": "cloudy",
+            "Bali": "Rainy"
+            // Add more weather data for other countries as needed
+        };
+
+        const weatherInfo = weatherData[selectedCountry];
+        document.getElementById("weatherInfo").textContent = `Weather in ${selectedCountry}: ${weatherInfo}`;
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to bottom right, #089a87, #0891b7);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 300px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 0;
+        color: #0e0d0d;
+    }
+
+    .calculator {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+        margin-top: 20px;
+    }
+
+    .button {
+        background-color: #e17c09;
+        color: #c55916;
+        border: none;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background-color: #b47217;
+    }
+
+    .button.clear {
+        grid-column: span 2;
+    }
+
+    .button.equal {
+        grid-column: span 4;
+    }
+
+    input {
+        border: none;
+        border-radius: 8px;
+        padding: 15px;
+        font-size: 18px;
+        text-align: right;
+        grid-column: span 4;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Calculator</h2>
+    <input type="text" id="display" disabled>
+    <div class="calculator">
+        <button class="button" onclick="addToDisplay('7')">7</button>
+        <button class="button" onclick="addToDisplay('8')">8</button>
+        <button class="button" onclick="addToDisplay('9')">9</button>
+        <button class="button" onclick="addToDisplay('/')">/</button>
+        <button class="button" onclick="addToDisplay('4')">4</button>
+        <button class="button" onclick="addToDisplay('5')">5</button>
+        <button class="button" onclick="addToDisplay('6')">6</button>
+        <button class="button" onclick="addToDisplay('*')">*</button>
+        <button class="button" onclick="addToDisplay('1')">1</button>
+        <button class="button" onclick="addToDisplay('2')">2</button>
+        <button class="button" onclick="addToDisplay('3')">3</button>
+        <button class="button" onclick="addToDisplay('-')">-</button>
+        <button class="button" onclick="addToDisplay('0')">0</button>
+        <button class="button" onclick="addToDisplay('.')">.</button>
+        <button class="button clear" onclick="clearDisplay()">C</button>
+        <button class="button" onclick="addToDisplay('+')">+</button>
+        <button class="button equal" onclick="calculate()">=</button>
+    </div>
+</div>
+
+<script>
+    function addToDisplay(value) {
+        document.getElementById("display").value += value;
+    }
+
+    function clearDisplay() {
+        document.getElementById("display").value = "";
+    }
+
+    function calculate() {
+        try {
+            const result = eval(document.getElementById("display").value);
+            document.getElementById("display").value = result;
+        } catch (error) {
+            document.getElementById("display").value = "Error";
+        }
+    }
+
+    document.addEventListener("keydown", function(event) {
+        const key = event.key;
+        const allowedKeys = /[0-9+\-*/.=]|Enter|Backspace|Delete|Escape/;
+        if (allowedKeys.test(key)) {
+            event.preventDefault();
+            switch (key) {
+                case "Enter":
+                    calculate();
+                    break;
+                case "Backspace":
+                case "Delete":
+                    clearDisplay();
+                    break;
+                case "Escape":
+                    clearDisplay();
+                    break;
+                default:
+                    addToDisplay(key);
+                    break;
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
