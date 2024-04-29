@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tip Calculator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to bottom right, #4caf50, #ff5722);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        margin-top: 0;
+        color: #2196f3;
+    }
+
+    input {
+        padding: 8px;
+        font-size: 18px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #ff5722;
+        border: none;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #f4511e;
+    }
+
+    .result {
+        margin-top: 20px;
+        font-size: 24px;
+    }
+
+    .result span {
+        color: green;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Tip Calculator</h1>
+    <input type="number" id="billAmount" placeholder="Bill Amount ($)">
+    <input type="number" id="tipPercentage" placeholder="Tip Percentage (%)">
+    <button onclick="calculateTip()">Calculate Tip</button>
+    <div class="result" id="tipAmount"></div>
+</div>
+
+<script>
+    function calculateTip() {
+        const billAmount = parseFloat(document.getElementById("billAmount").value);
+        const tipPercentage = parseFloat(document.getElementById("tipPercentage").value);
+
+        if (isNaN(billAmount) || isNaN(tipPercentage)) {
+            alert("Please enter valid numbers!");
+            return;
+        }
+
+        const tipAmount = (billAmount * (tipPercentage / 100)).toFixed(2);
+        document.getElementById("tipAmount").innerHTML = `Tip Amount: <span>$${tipAmount}</span>`;
+    }
+</script>
+
+</body>
+</html>
